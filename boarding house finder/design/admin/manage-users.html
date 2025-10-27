@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Manage Users - Admin</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="../css/style.css">
+
+   <style>
+      /* User Management Styles */
+      .user-management {
+         padding: 2rem;
+         max-width: 1400px;
+         margin: 0 auto;
+      }
+
+      .page-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 3rem;
+         padding-bottom: 1rem;
+         border-bottom: var(--border);
+      }
+
+      .page-header h1 {
+         font-size: 2.8rem;
+         color: var(--black);
+         margin-bottom: 0.5rem;
+      }
+
+      .back-link {
+         background: var(--main-color);
+         color: var(--white);
+         padding: 1rem 2rem;
+         border-radius: 8px;
+         text-decoration: none;
+         font-size: 1.6rem;
+         transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+         transform: translateY(-2px);
+         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      }
+
+      /* Search and Filters */
+      .search-filters {
+         background: var(--white);
+         padding: 2rem;
+         border-radius: 15px;
+         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+         margin-bottom: 3rem;
+      }
+
+      .search-box {
+         display: flex;
+         gap: 1rem;
+         margin-bottom: 1.5rem;
+      }
+
+      .search-box input {
+         flex: 1;
+         padding: 1.2rem;
+         border: var(--border);
+         border-radius: 8px;
+         font-size: 1.6rem;
+      }
+
+      .search-btn {
+         background: var(--main-color);
+         color: var(--white);
+         border: none;
+         padding: 1.2rem 2rem;
+         border-radius: 8px;
+         cursor: pointer;
+         font-size: 1.6rem;
+      }
+
+      .filter-row {
+         display: flex;
+         gap: 1rem;
+         flex-wrap: wrap;
+      }
+
+      .filter-select {
+         padding: 1rem;
+         border: var(--border);
+         border-radius: 8px;
+         font-size: 1.4rem;
+         background: var(--white);
+      }
+
+      /* Users Table */
+      .users-table {
+         background: var(--white);
+         border-radius: 15px;
+         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+         overflow: hidden;
+      }
+
+      .table-header {
+         display: grid;
+         grid-template-columns: 2fr 2fr 1fr 1fr 1fr 2fr;
+         gap: 1rem;
+         padding: 1.5rem 2rem;
+         background: #f8f9fa;
+         border-bottom: var(--border);
+         font-weight: 600;
+         font-size: 1.4rem;
+         color: var(--black);
+      }
+
+      .user-row {
+         display: grid;
+         grid-template-columns: 2fr 2fr 1fr 1fr 1fr 2fr;
+         gap: 1rem;
+         padding: 1.5rem 2rem;
+         border-bottom: var(--border);
+         align-items: center;
+         transition: all 0.3s ease;
+      }
+
+      .user-row:hover {
+         background: #f8f9fa;
+      }
+
+      .user-row:last-child {
+         border-bottom: none;
+      }
+
+      .user-info {
+         display: flex;
+         align-items: center;
+         gap: 1rem;
+      }
+
+      .user-avatar {
+         width: 4rem;
+         height: 4rem;
+         border-radius: 50%;
+         background: var(--main-color);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: white;
+         font-weight: 600;
+         font-size: 1.6rem;
+      }
+
+      .user-details h4 {
+         font-size: 1.6rem;
+         color: var(--black);
+         margin-bottom: 0.3rem;
+      }
+
+      .user-details .email {
+         font-size: 1.3rem;
+         color: var(--light-color);
+      }
+
+      .user-type {
+         padding: 0.5rem 1rem;
+         border-radius: 20px;
+         font-size: 1.2rem;
+         font-weight: 600;
+         text-transform: uppercase;
+         text-align: center;
+      }
+
+      .type-landlord {
+         background: #e3f2fd;
+         color: #1976d2;
+      }
+
+      .type-boarder {
+         background: #f3e5f5;
+         color: #7b1fa2;
+      }
+
+      .status-badge {
+         padding: 0.5rem 1rem;
+         border-radius: 20px;
+         font-size: 1.2rem;
+         font-weight: 600;
+         text-transform: uppercase;
+         text-align: center;
+      }
+
+      .status-active {
+         background: #d4edda;
+         color: #155724;
+      }
+
+      .status-pending {
+         background: #fff3cd;
+         color: #856404;
+      }
+
+      .status-suspended {
+         background: #f8d7da;
+         color: #721c24;
+      }
+
+      .user-actions {
+         display: flex;
+         gap: 0.5rem;
+         justify-content: flex-end;
+      }
+
+      .action-btn {
+         padding: 0.6rem 1rem;
+         border: none;
+         border-radius: 6px;
+         font-size: 1.2rem;
+         cursor: pointer;
+         transition: all 0.3s ease;
+      }
+
+      .suspend-btn {
+         background: #ffc107;
+         color: #856404;
+      }
+
+      .suspend-btn:hover {
+         background: #e0a800;
+         transform: translateY(-1px);
+      }
+
+      .activate-btn {
+         background: #28a745;
+         color: white;
+      }
+
+      .activate-btn:hover {
+         background: #218838;
+         transform: translateY(-1px);
+      }
+
+      .delete-btn {
+         background: #dc3545;
+         color: white;
+      }
+
+      .delete-btn:hover {
+         background: #c82333;
+         transform: translateY(-1px);
+      }
+
+      .reset-btn {
+         background: #17a2b8;
+         color: white;
+      }
+
+      .reset-btn:hover {
+         background: #138496;
+         transform: translateY(-1px);
+      }
+
+      .empty-state {
+         text-align: center;
+         padding: 4rem 2rem;
+         background: var(--white);
+         border-radius: 15px;
+         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      }
+
+      .empty-state i {
+         font-size: 6rem;
+         color: var(--light-color);
+         margin-bottom: 2rem;
+      }
+
+      .empty-state h3 {
+         font-size: 2.4rem;
+         color: var(--black);
+         margin-bottom: 1rem;
+      }
+
+      .empty-state p {
+         color: var(--light-color);
+         font-size: 1.6rem;
+         margin-bottom: 2rem;
+      }
+
+      .loading-spinner {
+         text-align: center;
+         padding: 3rem;
+         font-size: 1.6rem;
+         color: var(--light-color);
+      }
+
+      .loading-spinner i {
+         font-size: 3rem;
+         margin-bottom: 1rem;
+         color: var(--main-color);
+      }
+
+      .success-message, .error-message {
+         padding: 1.5rem;
+         border-radius: 8px;
+         margin-bottom: 2rem;
+         font-size: 1.4rem;
+         display: none;
+      }
+
+      .success-message {
+         background: #d4edda;
+         color: #155724;
+         border-left: 4px solid #28a745;
+      }
+
+      .error-message {
+         background: #f8d7da;
+         color: #721c24;
+         border-left: 4px solid #dc3545;
+      }
+
+      .pagination {
+         display: flex;
+         justify-content: center;
+         gap: 1rem;
+         margin-top: 3rem;
+      }
+
+      .page-btn {
+         padding: 1rem 1.5rem;
+         border: var(--border);
+         border-radius: 6px;
+         background: var(--white);
+         cursor: pointer;
+         font-size: 1.4rem;
+         transition: all 0.3s ease;
+      }
+
+      .page-btn.active {
+         background: var(--main-color);
+         color: var(--white);
+         border-color: var(--main-color);
+      }
+
+      .page-btn:hover:not(.active) {
+         background: #f8f9fa;
+      }
+
+      .stats-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+         gap: 2rem;
+         margin-bottom: 3rem;
+      }
+
+      .stat-card {
+         background: var(--white);
+         padding: 2rem;
+         border-radius: 15px;
+         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+         text-align: center;
+         border-top: 4px solid var(--main-color);
+      }
+
+      .stat-card i {
+         font-size: 3rem;
+         color: var(--main-color);
+         margin-bottom: 1rem;
+      }
+
+      .stat-number {
+         font-size: 2.5rem;
+         font-weight: 700;
+         color: var(--black);
+         margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+         color: var(--light-color);
+         font-size: 1.4rem;
+      }
+   </style>
+</head>
+<body>
+   
+<!-- header section starts  -->
+<header class="header">
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="../home.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+      </section>
+   </nav>
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               <li><a href="#">Admin<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="dashboard.html">Dashboard</a></li>
+                     <li><a href="pending-landlords.html">Pending Landlords</a></li>
+                     <li><a href="manage-properties.html">Manage Properties</a></li>
+                     <li><a href="manage-users.html">Manage Users</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+         <ul>
+            <li><a href="#" id="adminLogout" class="admin-logout">
+               <i class="fas fa-sign-out-alt"></i> Logout
+            </a></li>
+         </ul>
+      </section>
+   </nav>
+</header>
+<!-- header section ends -->
+
+<!-- user management section starts  -->
+<section class="user-management">
+   <div class="page-header">
+      <div>
+         <h1>Manage Users</h1>
+         <p style="color: var(--light-color); font-size: 1.6rem;">Manage all landlords and boarders</p>
+      </div>
+      <a href="dashboard.html" class="back-link">
+         <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+   </div>
+
+   <!-- Messages -->
+   <div id="successMessage" class="success-message"></div>
+   <div id="errorMessage" class="error-message"></div>
+
+   <!-- User Statistics -->
+   <div class="stats-grid">
+      <div class="stat-card">
+         <i class="fas fa-users"></i>
+         <div class="stat-number" id="totalUsers">0</div>
+         <div class="stat-label">Total Users</div>
+      </div>
+      <div class="stat-card">
+         <i class="fas fa-user-tie"></i>
+         <div class="stat-number" id="totalLandlords">0</div>
+         <div class="stat-label">Landlords</div>
+      </div>
+      <div class="stat-card">
+         <i class="fas fa-home"></i>
+         <div class="stat-number" id="totalBoarders">0</div>
+         <div class="stat-label">Boarders</div>
+      </div>
+      <div class="stat-card">
+         <i class="fas fa-user-clock"></i>
+         <div class="stat-number" id="pendingLandlords">0</div>
+         <div class="stat-label">Pending Approval</div>
+      </div>
+   </div>
+
+   <!-- Search and Filters -->
+   <div class="search-filters">
+      <div class="search-box">
+         <input type="text" id="searchInput" placeholder="Search users by name or email...">
+         <button class="search-btn" onclick="loadUsers()">
+            <i class="fas fa-search"></i> Search
+         </button>
+      </div>
+      <div class="filter-row">
+         <select class="filter-select" id="userTypeFilter" onchange="loadUsers()">
+            <option value="">All Users</option>
+            <option value="landlord">Landlords</option>
+            <option value="boarder">Boarders</option>
+         </select>
+         <select class="filter-select" id="statusFilter" onchange="loadUsers()">
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="pending">Pending</option>
+            <option value="suspended">Suspended</option>
+         </select>
+         <select class="filter-select" id="sortBy" onchange="loadUsers()">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="name">Name A-Z</option>
+         </select>
+      </div>
+   </div>
+
+   <!-- Loading State -->
+   <div id="loadingSpinner" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Loading users...</p>
+   </div>
+
+   <!-- Empty State -->
+   <div id="emptyState" class="empty-state" style="display: none;">
+      <i class="fas fa-users"></i>
+      <h3>No Users Found</h3>
+      <p>No users match your search criteria.</p>
+      <button class="back-link" onclick="clearFilters()">Clear Filters</button>
+   </div>
+
+   <!-- Users Table -->
+   <div class="users-table">
+      <div class="table-header">
+         <div>User</div>
+         <div>Contact</div>
+         <div>Type</div>
+         <div>Status</div>
+         <div>Properties</div>
+         <div>Actions</div>
+      </div>
+      <div id="usersContainer"></div>
+   </div>
+
+   <!-- Pagination -->
+   <div id="pagination" class="pagination" style="display: none;"></div>
+</section>
+
+<script>
+// Global variables
+let currentPage = 1;
+const itemsPerPage = 15;
+
+// Load users
+function loadUsers(page = 1) {
+   currentPage = page;
+   const loadingSpinner = document.getElementById('loadingSpinner');
+   const emptyState = document.getElementById('emptyState');
+   const usersContainer = document.getElementById('usersContainer');
+   const pagination = document.getElementById('pagination');
+   
+   loadingSpinner.style.display = 'block';
+   emptyState.style.display = 'none';
+   usersContainer.innerHTML = '';
+   pagination.style.display = 'none';
+
+   const search = document.getElementById('searchInput').value;
+   const userType = document.getElementById('userTypeFilter').value;
+   const status = document.getElementById('statusFilter').value;
+   const sortBy = document.getElementById('sortBy').value;
+
+   const params = new URLSearchParams({
+      page: page,
+      limit: itemsPerPage,
+      search: search,
+      user_type: userType,
+      status: status,
+      sort: sortBy
+   });
+
+   fetch(`../api/admin/users.php?${params}`)
+      .then(response => response.json())
+      .then(data => {
+         loadingSpinner.style.display = 'none';
+         
+         if (data.success && data.users.length > 0) {
+            displayUsers(data.users);
+            updateStats(data.stats);
+            displayPagination(data.total);
+         } else {
+            emptyState.style.display = 'block';
+         }
+      })
+      .catch(error => {
+         loadingSpinner.style.display = 'none';
+         showError('Failed to load users. Please try again.');
+         console.error('Error loading users:', error);
+      });
+}
+
+// Display users in the table
+function displayUsers(users) {
+   const container = document.getElementById('usersContainer');
+   
+   users.forEach(user => {
+      const userRow = document.createElement('div');
+      userRow.className = 'user-row';
+      
+      // Get first letter for avatar
+      const firstLetter = user.name.charAt(0).toUpperCase();
+      
+      // Determine status and type classes
+      const statusClass = user.is_approved ? 'status-active' : 'status-pending';
+      const statusText = user.is_approved ? 'Active' : 'Pending';
+      const typeClass = user.user_type === 'landlord' ? 'type-landlord' : 'type-boarder';
+      
+      userRow.innerHTML = `
+         <div class="user-info">
+            <div class="user-avatar">${firstLetter}</div>
+            <div class="user-details">
+               <h4>${user.name}</h4>
+               <div class="email">${user.email}</div>
+            </div>
+         </div>
+         <div>${user.phone || 'N/A'}</div>
+         <div>
+            <span class="user-type ${typeClass}">${user.user_type}</span>
+         </div>
+         <div>
+            <span class="status-badge ${statusClass}">${statusText}</span>
+         </div>
+         <div>${user.property_count || 0}</div>
+         <div class="user-actions">
+            ${user.user_type === 'landlord' && !user.is_approved ? `
+               <button class="action-btn activate-btn" onclick="approveUser(${user.id})" title="Approve">
+                  <i class="fas fa-check"></i>
+               </button>
+            ` : ''}
+            ${user.is_approved ? `
+               <button class="action-btn suspend-btn" onclick="suspendUser(${user.id})" title="Suspend">
+                  <i class="fas fa-pause"></i>
+               </button>
+            ` : `
+               <button class="action-btn activate-btn" onclick="activateUser(${user.id})" title="Activate">
+                  <i class="fas fa-play"></i>
+               </button>
+            `}
+            <button class="action-btn reset-btn" onclick="resetPassword(${user.id})" title="Reset Password">
+               <i class="fas fa-key"></i>
+            </button>
+            <button class="action-btn delete-btn" onclick="deleteUser(${user.id})" title="Delete">
+               <i class="fas fa-trash"></i>
+            </button>
+         </div>
+      `;
+      container.appendChild(userRow);
+   });
+}
+
+// Update statistics
+function updateStats(stats) {
+   document.getElementById('totalUsers').textContent = stats.total_users;
+   document.getElementById('totalLandlords').textContent = stats.total_landlords;
+   document.getElementById('totalBoarders').textContent = stats.total_boarders;
+   document.getElementById('pendingLandlords').textContent = stats.pending_landlords;
+}
+
+// Display pagination
+function displayPagination(total) {
+   const totalPages = Math.ceil(total / itemsPerPage);
+   if (totalPages <= 1) return;
+   
+   const pagination = document.getElementById('pagination');
+   pagination.style.display = 'flex';
+   pagination.innerHTML = '';
+   
+   for (let i = 1; i <= totalPages; i++) {
+      const pageBtn = document.createElement('button');
+      pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+      pageBtn.textContent = i;
+      pageBtn.onclick = () => loadUsers(i);
+      pagination.appendChild(pageBtn);
+   }
+}
+
+// Clear filters
+function clearFilters() {
+   document.getElementById('searchInput').value = '';
+   document.getElementById('userTypeFilter').value = '';
+   document.getElementById('statusFilter').value = '';
+   document.getElementById('sortBy').value = 'newest';
+   loadUsers(1);
+}
+
+// User actions
+function approveUser(userId) {
+   if (!confirm('Are you sure you want to approve this landlord?')) return;
+   
+   updateUserStatus(userId, 'approve');
+}
+
+function suspendUser(userId) {
+   if (!confirm('Are you sure you want to suspend this user?')) return;
+   
+   updateUserStatus(userId, 'suspend');
+}
+
+function activateUser(userId) {
+   if (!confirm('Are you sure you want to activate this user?')) return;
+   
+   updateUserStatus(userId, 'activate');
+}
+
+function updateUserStatus(userId, action) {
+   fetch('../api/admin/users.php', {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+         action: action,
+         user_id: userId
+      })
+   })
+   .then(response => response.json())
+   .then(data => {
+      if (data.success) {
+         showSuccess(data.message);
+         loadUsers(currentPage);
+      } else {
+         showError(data.message || 'Failed to update user.');
+      }
+   })
+   .catch(error => {
+      showError('Network error. Please try again.');
+      console.error('Error updating user:', error);
+   });
+}
+
+function resetPassword(userId) {
+   const newPassword = prompt('Enter new password for this user:');
+   if (!newPassword) return;
+   
+   if (newPassword.length < 8) {
+      alert('Password must be at least 8 characters long');
+      return;
+   }
+   
+   fetch('../api/admin/users.php', {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+         action: 'reset_password',
+         user_id: userId,
+         new_password: newPassword
+      })
+   })
+   .then(response => response.json())
+   .then(data => {
+      if (data.success) {
+         showSuccess('Password reset successfully!');
+      } else {
+         showError(data.message || 'Failed to reset password.');
+      }
+   })
+   .catch(error => {
+      showError('Network error. Please try again.');
+      console.error('Error resetting password:', error);
+   });
+}
+
+function deleteUser(userId) {
+   if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
+   
+   fetch('../api/admin/users.php', {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+         action: 'delete',
+         user_id: userId
+      })
+   })
+   .then(response => response.json())
+   .then(data => {
+      if (data.success) {
+         showSuccess('User deleted successfully!');
+         loadUsers(currentPage);
+      } else {
+         showError(data.message || 'Failed to delete user.');
+      }
+   })
+   .catch(error => {
+      showError('Network error. Please try again.');
+      console.error('Error deleting user:', error);
+   });
+}
+
+// Utility functions
+function showSuccess(message) {
+   const successDiv = document.getElementById('successMessage');
+   successDiv.textContent = message;
+   successDiv.style.display = 'block';
+   setTimeout(() => successDiv.style.display = 'none', 5000);
+}
+
+function showError(message) {
+   const errorDiv = document.getElementById('errorMessage');
+   errorDiv.textContent = message;
+   errorDiv.style.display = 'block';
+   setTimeout(() => errorDiv.style.display = 'none', 5000);
+}
+
+// Check admin authentication
+function checkAdminAuth() {
+   fetch('../api/admin/dashboard.php')
+      .then(response => response.json())
+      .then(data => {
+         if (!data.success && data.message === 'Unauthorized') {
+            window.location.href = 'login.html';
+         }
+      })
+      .catch(error => {
+         console.error('Auth check error:', error);
+         window.location.href = 'login.html';
+      });
+}
+
+// Logout functionality
+document.getElementById('adminLogout').addEventListener('click', function(e) {
+   e.preventDefault();
+   
+   if (confirm('Are you sure you want to logout?')) {
+      fetch('../api/admin/auth.php?action=logout')
+         .then(response => response.json())
+         .then(data => {
+            if (data.success) {
+               window.location.href = 'login.html';
+            }
+         })
+         .catch(error => {
+            console.error('Logout error:', error);
+            window.location.href = 'login.html';
+         });
+   }
+});
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+   checkAdminAuth();
+   loadUsers();
+   
+   // Enter key for search
+   document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+         loadUsers();
+      }
+   });
+});
+</script>
+
+<!-- footer section starts  -->
+<footer class="footer">
+   <section class="flex">
+      <div class="box">
+         <a href="tel:1234567890"><i class="fas fa-phone"></i><span>phone number</span></a>
+         <a href="../contact.html"><span>contact</span></a>
+      </div>
+      <div class="box">
+         <a href="mailto:GHboardinghouse@gmail.com"><i class="fas fa-envelope"></i><span>GHboardinghouse@gmail.com</span></a>
+         <a href="../listings.html"><span>all listings</span></a>
+      </div>
+      <div class="box">
+         <a href="#"><i class="fas fa-map-marker-alt"></i><span>address</span></a>
+         <a href="../about.html"><span>about</span></a>
+      </div>
+   </section>
+   <div class="credit">Design and Developed by <span>CPE-3B</span></div>
+</footer>
+<!-- footer section ends -->
+
+<!-- custom js file link  -->
+<script src="../js/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>My Dashboard - Boarding House Finder</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="css/style.css">
+
+   <style>
+      /* Boarder Dashboard Styles - Matching Your Website Theme */
+      .boarder-dashboard {
+         padding: 2rem;
+         max-width: 1200px;
+         margin: 0 auto;
+      }
+
+      .dashboard-header {
+         text-align: center;
+         margin-bottom: 3rem;
+         padding: 3rem 0;
+         background: linear-gradient(135deg, var(--main-color) 0%, #d4af37 100%);
+         border-radius: 15px;
+         color: var(--white);
+      }
+
+      .dashboard-header h1 {
+         font-size: 3.5rem;
+         margin-bottom: 1rem;
+         font-weight: 700;
+      }
+
+      .dashboard-header p {
+         font-size: 1.8rem;
+         opacity: 0.9;
+      }
+
+      /* Stats Grid - Matching Your Property Cards */
+      .stats-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+         gap: 2rem;
+         margin-bottom: 4rem;
+      }
+
+      .stat-card {
+         background: var(--white);
+         padding: 3rem 2rem;
+         border-radius: 15px;
+         box-shadow: var(--box-shadow);
+         border: var(--border);
+         text-align: center;
+         transition: var(--transition);
+      }
+
+      .stat-card:hover {
+         transform: translateY(-10px);
+         box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      }
+
+      .stat-card i {
+         font-size: 4rem;
+         color: var(--main-color);
+         margin-bottom: 1.5rem;
+         background: #fff9e6;
+         padding: 1.5rem;
+         border-radius: 50%;
+      }
+
+      .stat-number {
+         font-size: 3.5rem;
+         font-weight: 700;
+         color: var(--black);
+         margin-bottom: 0.5rem;
+         font-family: 'Arial', sans-serif;
+      }
+
+      .stat-label {
+         color: var(--light-color);
+         font-size: 1.6rem;
+         font-weight: 500;
+      }
+
+      /* Quick Actions - Matching Your Button Styles */
+      .quick-actions {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+         gap: 2.5rem;
+         margin-bottom: 4rem;
+      }
+
+      .action-card {
+         background: var(--white);
+         padding: 3rem 2.5rem;
+         border-radius: 15px;
+         box-shadow: var(--box-shadow);
+         border: var(--border);
+         text-align: center;
+         transition: var(--transition);
+         cursor: pointer;
+      }
+
+      .action-card:hover {
+         transform: translateY(-10px);
+         border-color: var(--main-color);
+         box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      }
+
+      .action-card i {
+         font-size: 5rem;
+         color: var(--main-color);
+         margin-bottom: 2rem;
+         display: block;
+      }
+
+      .action-card h3 {
+         font-size: 2.2rem;
+         color: var(--black);
+         margin-bottom: 1.5rem;
+         font-weight: 600;
+      }
+
+      .action-card p {
+         color: var(--light-color);
+         font-size: 1.6rem;
+         margin-bottom: 2rem;
+         line-height: 1.6;
+      }
+
+      .action-btn {
+         background: var(--main-color);
+         color: var(--white);
+         padding: 1.2rem 2.5rem;
+         border-radius: 8px;
+         text-decoration: none;
+         font-size: 1.6rem;
+         font-weight: 600;
+         transition: var(--transition);
+         display: inline-block;
+         border: 2px solid var(--main-color);
+      }
+
+      .action-btn:hover {
+         background: var(--white);
+         color: var(--main-color);
+         transform: translateY(-3px);
+      }
+
+      /* Favorites Section - Matching Your Listings Style */
+      .favorites-section {
+         background: var(--white);
+         padding: 3rem;
+         border-radius: 15px;
+         box-shadow: var(--box-shadow);
+         border: var(--border);
+         margin-bottom: 3rem;
+      }
+
+      .section-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 3rem;
+         padding-bottom: 1.5rem;
+         border-bottom: var(--border);
+      }
+
+      .section-header h2 {
+         font-size: 2.8rem;
+         color: var(--black);
+         font-weight: 600;
+      }
+
+      .section-header h2 i {
+         color: var(--main-color);
+         margin-right: 1rem;
+      }
+
+      .view-all {
+         background: var(--main-color);
+         color: var(--white);
+         padding: 1rem 2rem;
+         border-radius: 8px;
+         text-decoration: none;
+         font-size: 1.6rem;
+         font-weight: 600;
+         transition: var(--transition);
+         border: 2px solid var(--main-color);
+      }
+
+      .view-all:hover {
+         background: var(--white);
+         color: var(--main-color);
+         transform: translateY(-3px);
+      }
+
+      .favorites-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+         gap: 2.5rem;
+      }
+
+      .favorite-card {
+         background: var(--white);
+         padding: 2.5rem;
+         border-radius: 15px;
+         box-shadow: var(--box-shadow);
+         border: var(--border);
+         transition: var(--transition);
+         position: relative;
+      }
+
+      .favorite-card:hover {
+         transform: translateY(-10px);
+         box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+         border-color: var(--main-color);
+      }
+
+      .favorite-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: flex-start;
+         margin-bottom: 1.5rem;
+      }
+
+      .favorite-info h4 {
+         font-size: 2rem;
+         color: var(--black);
+         margin-bottom: 1rem;
+         font-weight: 600;
+      }
+
+      .favorite-price {
+         font-size: 2.4rem;
+         color: var(--main-color);
+         font-weight: 700;
+         font-family: 'Arial', sans-serif;
+      }
+
+      .favorite-address {
+         color: var(--light-color);
+         font-size: 1.5rem;
+         margin-bottom: 1.5rem;
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+      }
+
+      .favorite-address i {
+         color: var(--main-color);
+      }
+
+      .favorite-meta {
+         display: flex;
+         gap: 2rem;
+         font-size: 1.4rem;
+         color: var(--light-color);
+         margin-bottom: 2rem;
+         padding-bottom: 1.5rem;
+         border-bottom: var(--border);
+      }
+
+      .favorite-meta span {
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+      }
+
+      .favorite-meta i {
+         color: var(--main-color);
+      }
+
+      .favorite-actions {
+         display: flex;
+         gap: 1rem;
+      }
+
+      .btn-small {
+         padding: 1rem 2rem;
+         border-radius: 8px;
+         text-decoration: none;
+         font-size: 1.4rem;
+         font-weight: 600;
+         transition: var(--transition);
+         flex: 1;
+         text-align: center;
+         border: 2px solid transparent;
+      }
+
+      .btn-primary {
+         background: var(--main-color);
+         color: var(--white);
+         border-color: var(--main-color);
+      }
+
+      .btn-primary:hover {
+         background: var(--white);
+         color: var(--main-color);
+         transform: translateY(-3px);
+      }
+
+      .btn-secondary {
+         background: var(--white);
+         color: var(--black);
+         border: 2px solid var(--border-color);
+      }
+
+      .btn-secondary:hover {
+         background: var(--light-bg);
+         border-color: var(--main-color);
+         transform: translateY(-3px);
+      }
+
+      /* Empty States */
+      .empty-state {
+         text-align: center;
+         padding: 4rem 2rem;
+         color: var(--light-color);
+      }
+
+      .empty-state i {
+         font-size: 6rem;
+         margin-bottom: 2rem;
+         color: #dee2e6;
+         opacity: 0.5;
+      }
+
+      .empty-state p {
+         font-size: 1.8rem;
+         margin-bottom: 2rem;
+         color: var(--light-color);
+      }
+
+      .loading-spinner {
+         text-align: center;
+         padding: 4rem;
+         font-size: 1.6rem;
+         color: var(--light-color);
+      }
+
+      .loading-spinner i {
+         font-size: 3rem;
+         margin-bottom: 1.5rem;
+         color: var(--main-color);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+         .boarder-dashboard {
+            padding: 1rem;
+         }
+         
+         .dashboard-header h1 {
+            font-size: 2.8rem;
+         }
+         
+         .stats-grid {
+            grid-template-columns: 1fr;
+         }
+         
+         .quick-actions {
+            grid-template-columns: 1fr;
+         }
+         
+         .favorites-grid {
+            grid-template-columns: 1fr;
+         }
+         
+         .favorite-actions {
+            flex-direction: column;
+         }
+      }
+   </style>
+</head>
+<body>
+   
+<!-- header section starts  -->
+<header class="header">
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="home.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+      </section>
+   </nav>
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               <li><a href="#">Menu<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="home.html">Browse Properties</a></li>
+                     <li><a href="listings.html">All Listings</a></li>
+                     <li><a href="about.html">About Us</a></li>
+                     <li><a href="contact.html">Contact Us</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+         <ul>
+            <li><a href="boarder-dashboard.html" class="active"><i class="fas fa-user"></i> Dashboard</a></li>
+            <li><a href="#" id="userLogout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+         </ul>
+      </section>
+   </nav>
+</header>
+<!-- header section ends -->
+
+<!-- boarder dashboard section starts  -->
+<section class="boarder-dashboard">
+   <!-- Welcome Header -->
+   <div class="dashboard-header">
+      <h1>Welcome back, <span id="userName">User</span>! 👋</h1>
+      <p>Manage your boarding house journey from here</p>
+   </div>
+
+   <!-- User Statistics -->
+   <div class="stats-grid">
+      <div class="stat-card">
+         <i class="fas fa-heart"></i>
+         <div class="stat-number" id="favoritesCount">0</div>
+         <div class="stat-label">Favorite Properties</div>
+      </div>
+      <div class="stat-card">
+         <i class="fas fa-star"></i>
+         <div class="stat-number" id="reviewsCount">0</div>
+         <div class="stat-label">Reviews Written</div>
+      </div>
+      <div class="stat-card">
+         <i class="fas fa-eye"></i>
+         <div class="stat-number" id="viewedCount">0</div>
+         <div class="stat-label">Properties Viewed</div>
+      </div>
+   </div>
+
+   <!-- Quick Actions -->
+   <div class="quick-actions">
+      <div class="action-card" onclick="location.href='home.html'">
+         <i class="fas fa-search"></i>
+         <h3>Find Properties</h3>
+         <p>Discover perfect boarding houses that match your preferences and budget</p>
+         <span class="action-btn">Start Searching</span>
+      </div>
+      <div class="action-card" onclick="location.href='listings.html'">
+         <i class="fas fa-list"></i>
+         <h3>All Listings</h3>
+         <p>Browse through all available properties in one convenient place</p>
+         <span class="action-btn">View Listings</span>
+      </div>
+      <div class="action-card" onclick="showFavorites()">
+         <i class="fas fa-heart"></i>
+         <h3>My Favorites</h3>
+         <p>Quickly access your saved properties and compare your options</p>
+         <span class="action-btn">View Favorites</span>
+      </div>
+   </div>
+
+   <!-- Favorites Section -->
+   <div class="favorites-section">
+      <div class="section-header">
+         <h2><i class="fas fa-heart"></i> Favorite Properties</h2>
+         <a href="listings.html?filter=favorites" class="view-all">View All</a>
+      </div>
+      
+      <div id="favoritesLoading" class="loading-spinner">
+         <i class="fas fa-spinner fa-spin"></i>
+         <p>Loading your favorites...</p>
+      </div>
+
+      <div id="favoritesEmpty" class="empty-state" style="display: none;">
+         <i class="fas fa-heart"></i>
+         <p>You haven't saved any favorite properties yet.</p>
+         <a href="home.html" class="btn-primary btn-small">Find Properties to Save</a>
+      </div>
+
+      <div id="favoritesGrid" class="favorites-grid"></div>
+   </div>
+</section>
+
+<script>
+// Load dashboard data
+function loadDashboardData() {
+   // Get user info from session
+   const userName = localStorage.getItem('userName') || 'User';
+   document.getElementById('userName').textContent = userName;
+   
+   // Load user statistics
+   loadUserStats();
+   
+   // Load favorite properties
+   loadFavorites();
+}
+
+// Load user statistics
+function loadUserStats() {
+   // Simulate API call - replace with actual API
+   setTimeout(() => {
+      // Mock data - replace with actual API calls
+      document.getElementById('favoritesCount').textContent = '3';
+      document.getElementById('reviewsCount').textContent = '2';
+      document.getElementById('viewedCount').textContent = '12';
+   }, 1000);
+}
+
+// Load favorite properties
+function loadFavorites() {
+   const loadingEl = document.getElementById('favoritesLoading');
+   const emptyEl = document.getElementById('favoritesEmpty');
+   const gridEl = document.getElementById('favoritesGrid');
+   
+   // Simulate API call to get favorites
+   setTimeout(() => {
+      loadingEl.style.display = 'none';
+      
+      // Mock favorites data - replace with actual API
+      const mockFavorites = [
+         {
+            id: 1,
+            title: 'Cozy Studio Apartment',
+            price: 2500,
+            address: '123 Main St, Quezon City',
+            beds: 1,
+            baths: 1,
+            capacity: '1-2'
+         },
+         {
+            id: 2,
+            title: 'Modern Bed Spacer',
+            price: 1500,
+            address: '456 Oak Avenue, Manila',
+            beds: 1,
+            baths: 1,
+            capacity: '1'
+         },
+         {
+            id: 3,
+            title: 'Spacious Room with View',
+            price: 3000,
+            address: '789 Pine Street, Makati',
+            beds: 2,
+            baths: 1,
+            capacity: '2-3'
+         }
+      ];
+      
+      if (mockFavorites.length === 0) {
+         emptyEl.style.display = 'block';
+      } else {
+         displayFavorites(mockFavorites);
+      }
+   }, 1500);
+}
+
+// Display favorite properties
+function displayFavorites(favorites) {
+   const gridEl = document.getElementById('favoritesGrid');
+   
+   favorites.forEach(property => {
+      const card = document.createElement('div');
+      card.className = 'favorite-card';
+      card.innerHTML = `
+         <div class="favorite-header">
+            <div class="favorite-info">
+               <h4>${property.title}</h4>
+               <div class="favorite-price">₱${property.price.toLocaleString()}</div>
+            </div>
+         </div>
+         <div class="favorite-address">
+            <i class="fas fa-map-marker-alt"></i> ${property.address}
+         </div>
+         <div class="favorite-meta">
+            <span><i class="fas fa-bed"></i> ${property.beds} bed</span>
+            <span><i class="fas fa-bath"></i> ${property.baths} bath</span>
+            <span><i class="fas fa-users"></i> ${property.capacity}</span>
+         </div>
+         <div class="favorite-actions">
+            <a href="view_property.html?id=${property.id}" class="btn-small btn-primary">View Details</a>
+            <button class="btn-small btn-secondary" onclick="removeFavorite(${property.id})">Remove</button>
+         </div>
+      `;
+      gridEl.appendChild(card);
+   });
+}
+
+// Remove from favorites
+function removeFavorite(propertyId) {
+   if (confirm('Remove this property from favorites?')) {
+      // Simulate API call to remove favorite
+      console.log('Removing favorite:', propertyId);
+      alert('Property removed from favorites!');
+      location.reload(); // Refresh to update the list
+   }
+}
+
+// Show favorites section
+function showFavorites() {
+   document.querySelector('.favorites-section').scrollIntoView({
+      behavior: 'smooth'
+   });
+}
+
+// Logout functionality
+document.getElementById('userLogout').addEventListener('click', function(e) {
+   e.preventDefault();
+   
+   if (confirm('Are you sure you want to logout?')) {
+      // Clear user session
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userType');
+      sessionStorage.clear();
+      
+      // Redirect to login page
+      window.location.href = 'login.html';
+   }
+});
+
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', function() {
+   loadDashboardData();
+});
+</script>
+
+<!-- footer section starts  -->
+<footer class="footer">
+   <section class="flex">
+      <div class="box">
+         <a href="tel:1234567890"><i class="fas fa-phone"></i><span>09912412441</span></a>
+         <a href="contact.html"><span>contact</span></a>
+      </div>
+      <div class="box">
+         <a href="mailto:GHboardinghouse@gmail.com"><i class="fas fa-envelope"></i><span>GHboardinghouse@gmail.com</span></a>
+         <a href="listings.html"><span>all listings</span></a>
+      </div>
+      <div class="box">
+         <a href="#"><i class="fas fa-map-marker-alt"></i><span>address</span></a>
+         <a href="about.html"><span>about</span></a>
+      </div>
+   </section>
+   <div class="credit">Design and Developed by <span>CPE-3B</span></div>
+</footer>
+<!-- footer section ends -->
+
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+
+</body>
+</html>

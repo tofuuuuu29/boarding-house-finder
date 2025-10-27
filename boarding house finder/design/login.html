@@ -190,6 +190,19 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     .then(data => {
         if (data.message.includes('successful')) {
             alert('Login successful!');
+            
+            // Store user information for dashboard (using your PHP response structure)
+            if (data.name) {
+                localStorage.setItem('userName', data.name);
+            }
+            if (data.user_id) {
+                localStorage.setItem('userId', data.user_id);
+            }
+            if (data.user_type) {
+                localStorage.setItem('userType', data.user_type);
+            }
+            
+            // Use the redirect URL from PHP response
             window.location.href = data.redirect;
         } else {
             alert('Error: ' + data.message);

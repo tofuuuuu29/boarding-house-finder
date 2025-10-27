@@ -181,6 +181,18 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
         return;
     }
     
+    // Password validation
+    if (password.length < 8) {
+        alert('Password must be at least 8 characters long');
+        return;
+    }
+    
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    if (specialChars.test(password)) {
+        alert('Password should not contain special characters');
+        return;
+    }
+    
     // Prepare data for API
     const data = {
         name: formData.get('name'),
@@ -190,8 +202,14 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
         phone: formData.get('phone')
     };
     
-    // Send to PHP backend
-    fetch('http://localhost/boarding%20house%20finder/design/auth/register.php', {
+    // Show loading state
+    const submitBtn = this.querySelector('input[type="submit"]');
+    const originalValue = submitBtn.value;
+    submitBtn.value = 'Registering...';
+    submitBtn.disabled = true;
+    
+    // Send to PHP backend - UPDATED PATH
+    fetch('auth/registers.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -200,21 +218,27 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.message.includes('successfully')) {
-            alert('Registration successful!');
-            // Redirect based on user type
-            if (data.user_type === 'landlord') {
-                window.location.href = 'landlord/dashboard.html';
+        if (data.success) {
+            if (data.requires_approval) {
+                // Landlord needs approval - redirect to pending page
+                alert(data.message);
+                window.location.href = 'auth/pending-approval.html';
             } else {
+                // Boarder is auto-approved - redirect to home
+                alert(data.message);
                 window.location.href = 'home.html';
             }
         } else {
             alert('Error: ' + data.message);
+            submitBtn.value = originalValue;
+            submitBtn.disabled = false;
         }
     })
     .catch(error => {
         console.error('Error:', error);
         alert('Registration failed. Please try again.');
+        submitBtn.value = originalValue;
+        submitBtn.disabled = false;
     });
 });
 </script>

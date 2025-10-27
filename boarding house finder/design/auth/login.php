@@ -43,16 +43,13 @@ if(!empty($data->email) && !empty($data->password) && !empty($data->user_type)) 
             
             http_response_code(200);
             echo json_encode(array(
-                "message" => "Login successful.",
-                "user" => array(
-                    "id" => $row['id'],
-                    "name" => $row['name'],
-                    "email" => $email,
-                    "user_type" => $user_type,
-                    "phone" => $row['phone']
-                ),
-               "redirect" => $user_type === 'landlord' ? '/boarding%20house%20finder/design/landlord/dashboard.html' : '/boarding%20house%20finder/design/home.html'
-            ));
+    "message" => "Login successful.",
+    "user_type" => $user_type,
+    "name" => $row['name'],
+    "user_id" => $row['id'],
+    "redirect" => $user_type === 'landlord' ? '/boarding%20house%20finder/design/landlord/dashboard.html' : '/boarding%20house%20finder/design/boarder-dashboard.html'
+));
+
         } else {
             http_response_code(401);
             echo json_encode(array("message" => "Login failed. Invalid credentials."));
