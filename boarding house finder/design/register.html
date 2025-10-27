@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Register</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="css/style.css">
+
+   <style>
+      /* Register page specific styles */
+      .register-container {
+         min-height: 80vh;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding: 2rem;
+      }
+
+      .register-box {
+         background: var(--white);
+         padding: 4rem 3rem;
+         border-radius: 15px;
+         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+         width: 100%;
+         max-width: 500px;
+         text-align: center;
+      }
+
+      .register-box h3 {
+         font-size: 2.8rem;
+         color: var(--black);
+         margin-bottom: 1rem;
+         font-weight: 600;
+      }
+
+      .register-subtitle {
+         color: var(--light-color);
+         font-size: 1.6rem;
+         margin-bottom: 3rem;
+      }
+
+      .register-box .box {
+         width: 100%;
+         margin: 1.2rem 0;
+         padding: 1.4rem;
+         border: var(--border);
+         border-radius: 8px;
+         font-size: 1.8rem;
+         background: var(--white);
+         transition: all 0.3s ease;
+      }
+
+      .register-box .box:focus {
+         border-color: var(--main-color);
+         box-shadow: 0 0 0 3px rgba(207, 181, 59, 0.1);
+      }
+
+      .register-box .btn {
+         margin-top: 2rem;
+         padding: 1.4rem;
+         border-radius: 8px;
+         font-size: 1.8rem;
+         font-weight: 600;
+         transition: all 0.3s ease;
+      }
+
+      .register-box .btn:hover {
+         transform: translateY(-2px);
+         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      }
+
+      .register-box p {
+         margin-top: 2rem;
+         font-size: 1.6rem;
+         color: var(--light-color);
+      }
+
+      .register-box a {
+         color: var(--main-color);
+         text-decoration: none;
+      }
+
+      .register-box a:hover {
+         text-decoration: underline;
+      }
+
+      .form-row {
+         display: flex;
+         gap: 1rem;
+      }
+
+      .form-row .box {
+         flex: 1;
+      }
+   </style>
+
+</head>
+<body>
+   
+<!-- header section starts  -->
+
+<header class="header">
+
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="home.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+      </section>
+   </nav>
+
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               <li><a href="#">help<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="about.html">about us</a></i></li>
+                     <li><a href="contact.html">contact us</a></i></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+
+         <ul>
+            <li><a href="register.html"><i class="fas fa-user"></i> register</a></li>
+            <li><a href="login.html">login</a></li>
+         </ul>
+      </section>
+   </nav>
+
+</header>
+<!-- header section ends -->
+
+<!-- register section starts  -->
+
+<section class="register-container">
+   <div class="register-box">
+      <form id="registerForm" method="post">
+         <h3>Create an Account!</h3>
+         <p class="register-subtitle">Join us to find your perfect boarding house</p>
+         
+         <!-- User Type Dropdown -->
+         <select name="user_type" class="box" required>
+            <option value="boarder">Boarder</option>
+            <option value="landlord">Landlord</option>
+         </select>
+
+         <input type="text" name="name" required maxlength="50" placeholder="Enter your full name" class="box">
+         <input type="email" name="email" required maxlength="50" placeholder="Enter your email" class="box">
+         
+         <div class="form-row">
+            <input type="password" name="password" required maxlength="20" placeholder="Enter password" class="box">
+            <input type="password" name="confirm_password" required maxlength="20" placeholder="Confirm password" class="box">
+         </div>
+         
+         <input type="tel" name="phone" maxlength="20" placeholder="Phone number (optional)" class="box">
+         
+         <p>Already have an account? <a href="login.html">Login now</a></p>
+         <input type="submit" value="Register now" name="submit" class="btn">
+      </form>
+   </div>
+</section>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const password = formData.get('password');
+    const confirmPassword = formData.get('confirm_password');
+    
+    // Check if passwords match
+    if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+    }
+    
+    // Prepare data for API
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        password: password,
+        user_type: formData.get('user_type'),
+        phone: formData.get('phone')
+    };
+    
+    // Send to PHP backend
+    fetch('http://localhost/boarding%20house%20finder/design/auth/register.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message.includes('successfully')) {
+            alert('Registration successful!');
+            // Redirect based on user type
+            if (data.user_type === 'landlord') {
+                window.location.href = 'landlord/dashboard.html';
+            } else {
+                window.location.href = 'home.html';
+            }
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Registration failed. Please try again.');
+    });
+});
+</script>
+
+<!-- register section ends -->
+
+<!-- footer section starts  -->
+
+<footer class="footer">
+
+   <section class="flex">
+
+      <div class="box">
+         <a href="tel:1234567890"><i class="fas fa-phone"></i><span>09912412441</span></a>
+          <a href="contact.html"><span>contact</span></a>
+      </div>
+
+      <div class="box">
+          <a href="mailto:GHboardinghouse@gmail.com"><i class="fas fa-envelope"></i><span> GHboardinghouse@gmail.com</span></a>
+         <a href="listings.html"><span> all listings</span></a>
+      </div>
+
+      <div class="box">
+         <a href="#"><i class="fas fa-map-marker-alt"></i><span> address</span></a>
+         <a href="about.html"><span> about</span></a>
+      </div>
+
+   </section>
+
+   <div class="credit">Design and Developed by <span>CPE-3B</span></div>
+
+</footer>
+
+<!-- footer section ends -->
+
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+
+</body>
+</html>
