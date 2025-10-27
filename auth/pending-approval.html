@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Pending Approval - MyHome</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+   <link rel="stylesheet" href="../css/style.css">
+   <style>
+      .pending-container {
+         min-height: 80vh;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding: 2rem;
+      }
+
+      .pending-box {
+         background: var(--white);
+         padding: 4rem;
+         border-radius: 15px;
+         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+         width: 100%;
+         max-width: 600px;
+         text-align: center;
+      }
+
+      .pending-icon {
+         font-size: 5rem;
+         color: var(--main-color);
+         margin-bottom: 2rem;
+         animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+         0% { transform: scale(1); }
+         50% { transform: scale(1.1); }
+         100% { transform: scale(1); }
+      }
+
+      .pending-box h2 {
+         font-size: 2.8rem;
+         color: var(--black);
+         margin-bottom: 1.5rem;
+      }
+
+      .pending-box p {
+         font-size: 1.6rem;
+         color: var(--light-color);
+         line-height: 1.6;
+         margin-bottom: 2rem;
+      }
+
+      .info-box {
+         background: var(--light-bg);
+         padding: 2rem;
+         border-radius: 10px;
+         margin-bottom: 2rem;
+      }
+
+      .info-box h3 {
+         font-size: 1.8rem;
+         color: var(--black);
+         margin-bottom: 1rem;
+      }
+
+      .info-box ul {
+         list-style: none;
+         text-align: left;
+      }
+
+      .info-box li {
+         font-size: 1.6rem;
+         color: var(--light-color);
+         margin-bottom: 1rem;
+         padding-left: 2rem;
+         position: relative;
+      }
+
+      .info-box li:before {
+         content: "•";
+         color: var(--main-color);
+         position: absolute;
+         left: 0;
+      }
+
+      .contact-support {
+         margin-top: 3rem;
+         padding-top: 2rem;
+         border-top: var(--border);
+      }
+
+      .contact-support p {
+         margin-bottom: 1rem;
+      }
+
+      .support-links {
+         display: flex;
+         justify-content: center;
+         gap: 2rem;
+      }
+
+      .support-link {
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         color: var(--main-color);
+         font-size: 1.6rem;
+         text-decoration: none;
+         transition: all 0.3s ease;
+      }
+
+      .support-link:hover {
+         color: var(--hover);
+      }
+
+      .btn-home {
+         display: inline-block;
+         padding: 1rem 2rem;
+         background-color: var(--main-color);
+         color: white;
+         text-decoration: none;
+         border-radius: 5px;
+         font-size: 1.6rem;
+         transition: all 0.3s ease;
+         margin-top: 2rem;
+      }
+
+      .btn-home:hover {
+         background-color: var(--hover);
+         transform: translateY(-2px);
+      }
+   </style>
+</head>
+<body>
+
+<header class="header">
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="../home.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+      </section>
+   </nav>
+
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               <li><a href="#">help<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="../about.html">about us</a></li>
+                     <li><a href="../contact.html">contact us</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+         <ul>
+            <li><a href="../home.html">Return Home</a></li>
+         </ul>
+      </section>
+   </nav>
+</header>
+
+<section class="pending-container">
+   <div class="pending-box">
+      <div class="pending-icon">
+         <i class="fas fa-clock"></i>
+      </div>
+      <h2>Account Pending Approval</h2>
+      <p>Thank you for registering as a landlord on MyHome! Your account is currently under review by our admin team.</p>
+      
+      <div class="info-box">
+         <h3>What happens next?</h3>
+         <ul>
+            <li>Our admin team will review your registration</li>
+            <li>You'll receive an email once your account is approved</li>
+            <li>Typical approval time is 24-48 hours</li>
+            <li>After approval, you can list your properties</li>
+         </ul>
+      </div>
+
+      <div class="contact-support">
+         <p>Need help or have questions?</p>
+         <div class="support-links">
+            <a href="../contact.html" class="support-link">
+               <i class="fas fa-envelope"></i>
+               Contact Support
+            </a>
+            <a href="tel:09912412441" class="support-link">
+               <i class="fas fa-phone"></i>
+               Call Us
+            </a>
+         </div>
+      </div>
+
+      <a href="../home.html" class="btn-home">Return to Homepage</a>
+   </div>
+</section>
+
+<footer class="footer">
+   <section class="flex">
+      <div class="box">
+         <a href="tel:09912412441"><i class="fas fa-phone"></i><span>09912412441</span></a>
+         <a href="../contact.html"><span>contact</span></a>
+      </div>
+
+      <div class="box">
+         <a href="mailto:GHboardinghouse@gmail.com"><i class="fas fa-envelope"></i><span>GHboardinghouse@gmail.com</span></a>
+         <a href="../listings.html"><span>all listings</span></a>
+      </div>
+
+      <div class="box">
+         <a href="#"><i class="fas fa-map-marker-alt"></i><span>address</span></a>
+         <a href="../about.html"><span>about</span></a>
+      </div>
+   </section>
+
+   <div class="credit">Design and Developed by <span>CPE-3B</span></div>
+</footer>
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>

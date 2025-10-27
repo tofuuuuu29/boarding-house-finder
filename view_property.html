@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>View Property</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="css/style.css">
+
+   <style>
+      .reviews-section {
+         max-width: 1200px;
+         margin: 2rem auto;
+         padding: 2rem;
+      }
+
+      .reviews-container {
+         margin-top: 2rem;
+      }
+
+      .review-card {
+         background: var(--white);
+         padding: 2rem;
+         border-radius: 8px;
+         margin-bottom: 1.5rem;
+         box-shadow: var(--box-shadow);
+      }
+
+      .review-header {
+         display: flex;
+         align-items: center;
+         margin-bottom: 1.5rem;
+      }
+
+      .reviewer-avatar {
+         width: 4rem;
+         height: 4rem;
+         background: var(--main-color);
+         border-radius: 50%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: var(--white);
+         font-size: 1.8rem;
+         margin-right: 1.5rem;
+      }
+
+      .reviewer-info h4 {
+         font-size: 1.8rem;
+         color: var(--black);
+         margin-bottom: 0.5rem;
+      }
+
+      .review-date {
+         font-size: 1.4rem;
+         color: var(--light-color);
+      }
+
+      .star-rating {
+         display: flex;
+         gap: 0.5rem;
+         font-size: 1.6rem;
+         color: var(--main-color);
+         margin-bottom: 1rem;
+      }
+
+      .review-comment {
+         font-size: 1.6rem;
+         color: var(--light-color);
+         line-height: 1.6;
+      }
+
+      .write-review {
+         background: var(--white);
+         padding: 2rem;
+         border-radius: 8px;
+         margin-bottom: 2rem;
+         box-shadow: var(--box-shadow);
+      }
+
+      .write-review h3 {
+         font-size: 2rem;
+         color: var(--black);
+         margin-bottom: 1.5rem;
+      }
+
+      .rating-input {
+         margin-bottom: 1.5rem;
+      }
+
+      .star-input {
+         display: none;
+      }
+
+      .star-label {
+         font-size: 2.5rem;
+         color: #ddd;
+         cursor: pointer;
+         transition: color 0.2s;
+      }
+
+      .star-label:hover,
+      .star-label:hover ~ .star-label,
+      .star-input:checked ~ .star-label {
+         color: var(--main-color);
+      }
+
+      .review-textarea {
+         width: 100%;
+         padding: 1.5rem;
+         border: var(--border);
+         border-radius: 8px;
+         font-size: 1.6rem;
+         margin-bottom: 1.5rem;
+         resize: vertical;
+         min-height: 100px;
+      }
+
+      .review-textarea:focus {
+         border-color: var(--main-color);
+         outline: none;
+      }
+
+      .submit-review {
+         background: var(--main-color);
+         color: var(--white);
+         padding: 1.2rem 2.5rem;
+         border-radius: 8px;
+         font-size: 1.6rem;
+         cursor: pointer;
+         transition: all 0.3s ease;
+      }
+
+      .submit-review:hover {
+         background: var(--black);
+      }
+
+      .loading {
+         display: none;
+         text-align: center;
+         padding: 2rem;
+      }
+
+      .loading i {
+         font-size: 3rem;
+         color: var(--main-color);
+      }
+
+      .no-reviews {
+         text-align: center;
+         padding: 3rem;
+         font-size: 1.8rem;
+         color: var(--light-color);
+      }
+   </style>
+</head>
+<body>
+   
+<!-- header section starts  -->
+
+<header class="header">
+
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="home.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+      </section>
+   </nav>
+
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               </li>
+               <li><a href="#">help<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="about.html">about us</a></i></li>
+                     <li><a href="contact.html">contact us</a></i></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+
+         <ul>
+            <li><a href="register.html"><i class="fas fa-user"></i> register</a></li>
+                  <li><a href="login.html">login</a></li>
+               </ul>
+            </li>
+         </ul>
+      </section>
+   </nav>
+
+</header>
+
+<!-- header section ends -->
+
+<!-- view property section starts  -->
+
+<section class="view-property">
+
+   <div class="details">
+      <div class="thumb">
+         <div class="big-image">
+            <img src="images/house-img-1.webp" alt="">
+         </div>
+         <div class="small-images">
+            <img src="images/house-img-1.pn" alt="">
+            <img src="images/hall-img-1.webp" alt="">
+            <img src="images/kitchen-img-1.webp" alt="">
+            <img src="images/bathroom-img-1.webp" alt="">
+         </div>
+      </div>
+      <h3 class="name">NAME OF THE BOARDING HOUSE</h3>
+      <p class="location"><i class="fas fa-map-marker-alt"></i><span>GOLDEN HARVEST ADDRESS</span></p>
+      <div class="info">
+         <p><i class="fas fa-tag"></i><span>address of the boarding house</span></p>
+         <p><i class="fas fa-user"></i><span>owner name</span></p>
+         <p><i class="fas fa-phone"></i><a href="tel:1234567890">cp no. of owner</a></p>
+         <p><i class="fas fa-house"></i><span>Bed Spacer/Studio Type</span></p>
+         <p><i class="fas fa-calendar"></i><span>Date posted</span></p>
+      </div>
+      <h3 class="title">details</h3>
+      <div class="flex">
+         <div class="box">
+            <p><i>capacity :</i><span>4 person</span></p>
+            <p><i>status :</i><span>2 slots</span></p>
+            <p><i>bed :</i><span>double deck</span></p>
+            <p><i>bathroom :</i><span>2</span></p>
+         </div>
+         <div class="box">
+            <p><i>Curfew :</i><span>n/a</span></p>  
+         </div>
+      </div>
+      <h3 class="title">amenities</h3>
+      <div class="flex">
+         <div class="box">
+            <p><i class="fas fa-check"></i><span>CCTV</span></p>
+            <p><i class="fas fa-times"></i><span>Airconditioned</span></p>
+            <p><i class="fas fa-times"></i><span>Terrace</span></p>
+            <p><i class="fas fa-check"></i><span>own bathroom</span></p>
+            <p><i class="fas fa-check"></i><span>water supply</span></p>
+            <p><i class="fas fa-check"></i><span>Own kitchen</span></p>
+            <p><i class="fas fa-check"></i><span>Own electric meter</span></p>
+         </div>
+         <div class="box">
+            <p><i class="fas fa-check"></i><span>parking area</span></p>
+            <p><i class="fas fa-times"></i><span>WIFI</span></p>
+         </div>
+      </div>
+      <h3 class="title">description</h3>
+      <p class="description">this boarding house is a description.</p>
+   </div>
+
+</section>
+
+<!-- view property section ends -->
+
+<!-- reviews section starts -->
+<section class="reviews-section">
+   <div class="write-review">
+      <h3>Write a Review</h3>
+      <form id="reviewForm">
+         <div class="rating-input">
+            <input type="radio" name="rating" value="5" id="star5" class="star-input">
+            <label for="star5" class="star-label">★</label>
+            <input type="radio" name="rating" value="4" id="star4" class="star-input">
+            <label for="star4" class="star-label">★</label>
+            <input type="radio" name="rating" value="3" id="star3" class="star-input">
+            <label for="star3" class="star-label">★</label>
+            <input type="radio" name="rating" value="2" id="star2" class="star-input">
+            <label for="star2" class="star-label">★</label>
+            <input type="radio" name="rating" value="1" id="star1" class="star-input">
+            <label for="star1" class="star-label">★</label>
+         </div>
+         <textarea class="review-textarea" name="comment" placeholder="Share your experience about this property..." required></textarea>
+         <button type="submit" class="submit-review">Submit Review</button>
+      </form>
+   </div>
+
+   <div class="reviews-container">
+      <div class="loading">
+         <i class="fas fa-spinner fa-spin"></i>
+         <p>Loading reviews...</p>
+      </div>
+      <!-- Reviews will be loaded here -->
+   </div>
+</section>
+<!-- reviews section ends -->
+
+
+
+
+
+
+
+
+<!-- footer section starts  -->
+
+<footer class="footer">
+
+   <section class="flex">
+
+      <div class="box">
+         <a href="tel:1234567890"><i class="fas fa-phone"></i><span>09912412441</span></a>
+          <a href="contact.html"><span>contact</span></a>
+      </div>
+
+      <div class="box">
+          <a href="mailto:shaikhanas@gmail.com"><i class="fas fa-envelope"></i><span>GHboardinghouse@gmail.com</span></a>
+         <a href="listings.html"><span>all listings</span></a>
+      </div>
+
+      <div class="box">
+         <a href="#"><i class="fas fa-map-marker-alt"></i><span>address</span></a>
+         <a href="about.html"><span>about</span></a>
+
+      </div>
+
+   </section>
+   <div class="credit">Design and Developed by <span>CPE-3B</span></div>
+
+</footer>
+
+<!-- footer section ends -->
+
+
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+
+<script>
+// Get property ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const propertyId = urlParams.get('id');
+
+// Load reviews
+function loadReviews() {
+    const reviewsContainer = document.querySelector('.reviews-container');
+    const loading = document.querySelector('.loading');
+    
+    loading.style.display = 'block';
+    
+    fetch(`api/properties/reviews.php?property_id=${propertyId}`)
+        .then(response => response.json())
+        .then(data => {
+            loading.style.display = 'none';
+            
+            if (data.success && data.reviews.length > 0) {
+                reviewsContainer.innerHTML = data.reviews.map(review => `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">
+                                ${review.user_name.charAt(0).toUpperCase()}
+                            </div>
+                            <div class="reviewer-info">
+                                <h4>${review.user_name}</h4>
+                                <span class="review-date">${new Date(review.created_at).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <div class="star-rating">
+                            ${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}
+                        </div>
+                        <p class="review-comment">${review.comment}</p>
+                    </div>
+                `).join('');
+            } else {
+                reviewsContainer.innerHTML = `
+                    <div class="no-reviews">
+                        <i class="fas fa-comment-alt"></i>
+                        <p>No reviews yet. Be the first to review this property!</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            loading.style.display = 'none';
+            reviewsContainer.innerHTML = `
+                <div class="no-reviews">
+                    <p>Error loading reviews. Please try again later.</p>
+                </div>
+            `;
+        });
+}
+
+// Handle review submission
+document.getElementById('reviewForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const rating = document.querySelector('input[name="rating"]:checked');
+    if (!rating) {
+        alert('Please select a rating');
+        return;
+    }
+    
+    const submitBtn = this.querySelector('.submit-review');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Submitting...';
+    submitBtn.disabled = true;
+    
+    const data = {
+        property_id: propertyId,
+        rating: parseInt(rating.value),
+        comment: this.comment.value
+    };
+    
+    fetch('api/properties/reviews.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Thank you for your review!');
+            this.reset();
+            loadReviews(); // Reload reviews
+        } else {
+            alert(data.message || 'Error submitting review. Please try again.');
+        }
+    })
+    .catch(error => {
+        alert('Error submitting review. Please try again.');
+    })
+    .finally(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    });
+});
+
+// Load reviews when page loads
+document.addEventListener('DOMContentLoaded', loadReviews);
+
+// Reverse star rating hover effect
+document.querySelectorAll('.star-label').forEach((star, index) => {
+    star.addEventListener('mouseover', () => {
+        document.querySelectorAll('.star-label').forEach((s, i) => {
+            if (i <= index) s.style.color = 'var(--main-color)';
+        });
+    });
+    
+    star.addEventListener('mouseout', () => {
+        document.querySelectorAll('.star-label').forEach(s => {
+            if (!s.previousElementSibling.checked) {
+                s.style.color = '#ddd';
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

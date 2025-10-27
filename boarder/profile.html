@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - MyHome</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .profile-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .profile-sidebar {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .profile-image-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--main-color);
+        }
+
+        .edit-profile-image {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--main-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-profile-image:hover {
+            background: var(--hover);
+        }
+
+        .image-requirements {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 5px;
+            font-size: 1.3rem;
+        }
+
+        .image-requirements p {
+            color: var(--black);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .image-requirements ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: var(--light-color);
+        }
+
+        .image-requirements li {
+            margin: 0.3rem 0;
+            text-align: left;
+        }
+
+        .profile-info h2 {
+            font-size: 2.4rem;
+            color: var(--black);
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            font-size: 1.6rem;
+            color: var(--light-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 5px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            color: var(--main-color);
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 1.4rem;
+            color: var(--light-color);
+        }
+
+        .profile-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .content-tabs {
+            display: flex;
+            gap: 2rem;
+            border-bottom: var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .tab-button {
+            font-size: 1.6rem;
+            color: var(--light-color);
+            padding: 1rem 0;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tab-button.active {
+            color: var(--main-color);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--main-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .profile-form {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 1.6rem;
+            color: var(--black);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            font-size: 1.6rem;
+            padding: 1rem;
+            border: var(--border);
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .save-changes {
+            background: var(--main-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-changes:hover {
+            background: var(--hover);
+        }
+
+        .reviews-list,
+        .saved-properties {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 5px;
+        }
+
+        .review-property {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .property-thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .property-info h3 {
+            font-size: 1.6rem;
+            color: var(--black);
+        }
+
+        .property-info p {
+            font-size: 1.4rem;
+            color: var(--light-color);
+        }
+
+        .review-rating {
+            color: #ffd700;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-text {
+            font-size: 1.6rem;
+            color: var(--light-color);
+            margin-bottom: 1rem;
+        }
+
+        .review-date {
+            font-size: 1.4rem;
+            color: var(--light-color);
+            text-align: right;
+        }
+
+        .property-card {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--light-bg);
+            border-radius: 5px;
+        }
+
+        .property-image {
+            width: 200px;
+            height: 150px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .property-details h3 {
+            font-size: 2rem;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+        }
+
+        .property-details p {
+            font-size: 1.6rem;
+            color: var(--light-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .property-price {
+            font-size: 1.8rem;
+            color: var(--main-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .property-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-property {
+            background: var(--main-color);
+            color: white;
+        }
+
+        .remove-saved {
+            background: var(--light-color);
+            color: white;
+        }
+
+        .action-button:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .property-card {
+                flex-direction: column;
+            }
+
+            .property-image {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar nav-1">
+            <section class="flex">
+                <a href="dashboard.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+            </section>
+        </nav>
+
+        <nav class="navbar nav-2">
+            <section class="flex">
+                <div id="menu-btn" class="fas fa-bars"></div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="../search.html">Find Housing</a></li>
+                        <li><a href="saved-properties.html">Saved Properties</a></li>
+                    </ul>
+                </div>
+                <ul>
+                    <li><a href="profile.html" class="active"><i class="fas fa-user"></i> My Profile</a></li>
+                    <li><a href="../auth/logout.php"><i class="fas fa-sign-out"></i> Logout</a></li>
+                </ul>
+            </section>
+        </nav>
+    </header>
+
+    <div class="profile-container">
+        <div class="profile-sidebar">
+            <div class="profile-image-container">
+                <img src="../images/default-avatar.png" alt="Profile" class="profile-image" id="profileImage">
+                <label for="imageInput" class="edit-profile-image">
+                    <i class="fas fa-camera"></i>
+                </label>
+                <input type="file" id="imageInput" hidden accept="image/jpeg,image/png,image/jpg">
+                <div class="image-requirements">
+                    <p>Profile Image Requirements:</p>
+                    <ul>
+                        <li>• JPG, JPEG, or PNG format</li>
+                        <li>• Maximum size: 5MB</li>
+                        <li>• Minimum dimensions: 200x200px</li>
+                        <li>• Maximum dimensions: 2000x2000px</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h2 id="userName">Loading...</h2>
+                <p>Boarder</p>
+            </div>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="savedCount">0</div>
+                    <div class="stat-label">Saved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="reviewCount">0</div>
+                    <div class="stat-label">Reviews</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="content-tabs">
+                <div class="tab-button active" data-tab="profile">Profile Information</div>
+                <div class="tab-button" data-tab="reviews">My Reviews</div>
+                <div class="tab-button" data-tab="saved">Saved Properties</div>
+            </div>
+
+            <div class="tab-content active" id="profileTab">
+                <form class="profile-form" id="profileForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" name="currentPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password (leave blank if not changing)</label>
+                        <input type="password" id="newPassword" name="newPassword">
+                    </div>
+                    <button type="submit" class="save-changes">Save Changes</button>
+                </form>
+            </div>
+
+            <div class="tab-content" id="reviewsTab">
+                <div class="reviews-list" id="reviewsList">
+                    <!-- Reviews will be loaded here -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="savedTab">
+                <div class="saved-properties" id="savedList">
+                    <!-- Saved properties will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/profile.js"></script>
+</body>
+</html>

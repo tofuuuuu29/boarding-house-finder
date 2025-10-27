@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Search Page</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+   
+<!-- header section starts  -->
+
+<header class="header">
+
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="home.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+      </section>
+   </nav>
+
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               </li>
+               <li><a href="#">help<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="about.html">about us</a></i></li>
+                     <li><a href="contact.html">contact us</a></i></li>
+                     <li><a href="contact.html#faq">FAQ</a></i></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+
+         <ul>
+            <li><a href="register.html"><i class="fas fa-user"></i> register</a></li>
+                  <li><a href="login.html">login</a></li>
+               </ul>
+            </li>
+         </ul>
+      </section>
+   </nav>
+
+</header>
+<!-- header section ends -->
+
+<!-- search filter section starts  -->
+
+<section class="filters" style="padding-bottom: 0;">
+
+   <form action="" method="post">
+      <div id="close-filter"><i class="fas fa-times"></i></div>
+      <h3>filter your search</h3>
+         
+         <div class="flex">
+            <div class="box">
+               <p>enter location</p>
+               <input type="text" name="location" required maxlength="50" placeholder="enter street name" class="input">
+            </div>
+            <div class="box"> 
+               <p>Room Type</p>
+               <select name="offer" class="input" required>
+                  <option value="Studio Type">Studio Type</option>
+                  <option value="Bed Spacer">house</option>
+               </select>
+            </div>
+            <div class="box">
+               <p>Capacity</p>
+               <select name="type" class="input" required>
+                  <option value="1">1 person</option>
+                  <option value="2-4">2-4 person</option>
+                  <option value="4-5">4-5 person</option>
+               </select>
+            </div>
+            <div class="box">
+               <p>status</p>
+               <select name="status" class="input" required>
+                  <option value="Available">Available</option>
+                  <option value="Not Available">Not Available</option>
+               </select>
+            </div>
+            <div class="box">
+               <p>Minimum budget</p>
+               <select name="minimum" class="input" required>
+                  <option value="1000">₱1000</option>
+                  <option value="2000">₱2000</option>
+                  <option value="3000">₱3000</option>
+                  <option value="4000">₱4000</option>
+                  <option value="5000">₱5000c</option>
+                  <option value="6000">₱6000</option>
+                  
+               </select>
+            </div>   
+            <div class="box">
+               <p>maximum budget</p>
+               <select name="maximum" class="input" required>
+                  <option value="1000">₱1000</option>
+                  <option value="2000">₱2000</option>
+                  <option value="3000">₱3000</option>
+                  <option value="4000">₱3000c</option>
+                  <option value="5000">₱5000</option>
+                  <option value="6000">₱6000</option>
+               </select>
+            </div>
+         </div>
+         <input type="submit" value="search property" name="search" class="btn">
+   </form>
+
+</section>
+
+<!-- search filter section ends -->
+
+<div id="filter-btn" class="fas fa-filter"></div>
+
+<!-- listings section starts  -->
+
+<section class="listings">
+
+   <h1 class="heading">searched results</h1>
+
+   <div class="properties-container">
+      <!-- Property results will be dynamically loaded here -->
+      <div class="loading-message">
+         <i class="fas fa-spinner fa-spin"></i>
+         <p>Loading properties...</p>
+      </div>
+   </div>
+
+</section>
+
+<!-- listings section ends -->
+<!-- footer section starts  -->
+
+<footer class="footer">
+
+   <section class="flex">
+
+      <div class="box">
+         <a href="tel:1234567890"><i class="fas fa-phone"></i><span>09912412441</span></a>
+          <a href="contact.html"><span>contact</span></a>
+      </div>
+
+      <div class="box">
+          <a href="mailto:shaikhanas@gmail.com"><i class="fas fa-envelope"></i><span>GHboardinghouse@gmail.com</span></a>
+         <a href="listings.html"><span>all listings</span></a>
+      </div>
+
+      <div class="box">
+         <a href="#"><i class="fas fa-map-marker-alt"></i><span>Golden Harvest Subdivision, Carig Sur</span></a>
+         <a href="about.html"><span>about</span></a>
+      </div>
+   </section>
+
+   <div class="credit">Design and Developed by <span>CPE-3B</span></div>
+
+</footer>
+
+<!-- footer section ends -->
+
+
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+<script src="js/search.js"></script>
+
+<script>
+document.querySelector('#filter-btn').onclick = () =>{
+   document.querySelector('.filters').classList.add('active');
+}
+
+document.querySelector('#close-filter').onclick = () =>{
+   document.querySelector('.filters').classList.remove('active');
+}
+</script>
+
+</body>
+</html>

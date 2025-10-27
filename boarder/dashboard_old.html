@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Boarder Dashboard</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+   <link rel="stylesheet" href="../css/style.css">
+   <style>
+      .dashboard, .quick-actions, .favorites-section {
+         max-width: 1200px;
+         margin: 2rem auto;
+         padding: 0 2rem;
+      }
+
+      .heading {
+         font-size: 2.5rem;
+         color: var(--black);
+         margin-bottom: 2rem;
+         text-align: left;
+         padding-bottom: 1rem;
+         border-bottom: var(--border);
+      }
+
+      .stats-container {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+         gap: 2rem;
+         margin-bottom: 3rem;
+      }
+
+      .stat-card {
+         background: var(--white);
+         padding: 2rem;
+         border-radius: 10px;
+         box-shadow: var(--box-shadow);
+         display: flex;
+         align-items: center;
+         gap: 2rem;
+      }
+
+      .stat-icon {
+         width: 6rem;
+         height: 6rem;
+         background: var(--main-color);
+         border-radius: 50%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: var(--white);
+         font-size: 2.5rem;
+      }
+
+      .stat-content h3 {
+         font-size: 3rem;
+         color: var(--black);
+         margin-bottom: 0.5rem;
+      }
+
+      .stat-content p {
+         color: var(--light-color);
+         font-size: 1.6rem;
+         margin-bottom: 1rem;
+      }
+
+      .stat-btn {
+         background: var(--main-color);
+         color: var(--white);
+         padding: 0.8rem 1.5rem;
+         border-radius: 5px;
+         font-size: 1.4rem;
+         transition: all 0.3s ease;
+      }
+
+      .stat-btn:hover {
+         background: var(--black);
+      }
+
+      .actions-container {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+         gap: 2rem;
+         margin-bottom: 3rem;
+      }
+
+      .action-card {
+         background: var(--white);
+         padding: 2rem;
+         border-radius: 10px;
+         box-shadow: var(--box-shadow);
+         display: flex;
+         align-items: center;
+         gap: 2rem;
+      }
+
+      .action-icon {
+         width: 6rem;
+         height: 6rem;
+         background: var(--main-color);
+         border-radius: 50%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: var(--white);
+         font-size: 2.5rem;
+      }
+
+      .action-content h3 {
+         font-size: 2rem;
+         color: var(--black);
+         margin-bottom: 0.5rem;
+      }
+
+      .action-content p {
+         color: var(--light-color);
+         font-size: 1.4rem;
+         margin-bottom: 1rem;
+      }
+
+      .action-btn {
+         background: var(--main-color);
+         color: var(--white);
+         padding: 0.8rem 1.5rem;
+         border-radius: 5px;
+         font-size: 1.4rem;
+         transition: all 0.3s ease;
+      }
+
+      .action-btn:hover {
+         background: var(--black);
+      }
+
+      .properties-container {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+         gap: 2rem;
+         margin-bottom: 2rem;
+      }
+
+      .property-card {
+         background: var(--white);
+         border-radius: 10px;
+         box-shadow: var(--box-shadow);
+         overflow: hidden;
+      }
+
+      .property-header {
+         padding: 1.5rem;
+         display: flex;
+         align-items: center;
+         gap: 1rem;
+         border-bottom: var(--border);
+      }
+
+      .property-avatar {
+         width: 4rem;
+         height: 4rem;
+         background: var(--main-color);
+         border-radius: 50%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: var(--white);
+         font-weight: bold;
+         font-size: 1.6rem;
+      }
+
+      .property-info p {
+         font-size: 1.6rem;
+         color: var(--black);
+         font-weight: bold;
+      }
+
+      .property-info span {
+         font-size: 1.2rem;
+         color: var(--light-color);
+      }
+
+      .property-image {
+         position: relative;
+         height: 20rem;
+         overflow: hidden;
+      }
+
+      .property-image img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+      }
+
+      .property-badges {
+         position: absolute;
+         top: 1rem;
+         left: 1rem;
+         display: flex;
+         gap: 0.5rem;
+      }
+
+      .badge {
+         padding: 0.5rem 1rem;
+         border-radius: 5px;
+         font-size: 1.2rem;
+         font-weight: bold;
+      }
+
+      .badge.type {
+         background: var(--main-color);
+         color: var(--white);
+      }
+
+      .badge.status {
+         background: #27ae60;
+         color: var(--white);
+      }
+
+      .property-details {
+         padding: 1.5rem;
+      }
+
+      .property-details h3 {
+         font-size: 1.8rem;
+         color: var(--black);
+         margin-bottom: 1rem;
+      }
+
+      .location {
+         color: var(--light-color);
+         font-size: 1.4rem;
+         margin-bottom: 1rem;
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+      }
+
+      .property-stats {
+         display: flex;
+         gap: 2rem;
+         margin-bottom: 1rem;
+      }
+
+      .stat {
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         color: var(--light-color);
+         font-size: 1.4rem;
+      }
+
+      .property-actions {
+         padding: 1.5rem;
+         border-top: var(--border);
+         display: flex;
+         gap: 1rem;
+      }
+
+      .btn {
+         padding: 1rem 2rem;
+         border-radius: 5px;
+         font-size: 1.4rem;
+         font-weight: bold;
+         text-align: center;
+         flex: 1;
+         transition: all 0.3s ease;
+      }
+
+      .btn.primary {
+         background: var(--main-color);
+         color: var(--white);
+      }
+
+      .btn.primary:hover {
+         background: var(--black);
+      }
+
+      .btn.secondary {
+         background: var(--white);
+         color: var(--black);
+         border: var(--border);
+      }
+
+      .btn.secondary:hover {
+         background: var(--light-bg);
+      }
+
+      .view-all-container {
+         text-align: center;
+      }
+
+      .view-all-btn {
+         background: var(--main-color);
+         color: var(--white);
+         padding: 1.2rem 3rem;
+         border-radius: 5px;
+         font-size: 1.6rem;
+         font-weight: bold;
+         transition: all 0.3s ease;
+      }
+
+      .view-all-btn:hover {
+         background: var(--black);
+      }
+   </style>
+</head>
+<body>
+   
+<header class="header">
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="dashboard.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+      </section>
+   </nav>
+
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               <li><a href="dashboard.html">Dashboard</a></li>
+               <li><a href="../search.html">Find Housing</a></li>
+               <li><a href="saved-properties.html">Saved Properties</a></li>
+            </ul>
+         </div>
+         <ul>
+            <li><a href="profile.html"><i class="fas fa-user"></i> <?php echo $_SESSION['user_name']; ?></a></li>
+            <li><a href="http://localhost/boarding%20house%20finder/design/auth/logout.php"><i class="fas fa-sign-out"></i> Logout</a></li>
+         </ul>
+      </section>
+   </nav>
+</header>
+
+<section class="dashboard">
+   <h1 class="heading">Dashboard Overview</h1>
+   
+   <div class="stats-container">
+      <div class="stat-card">
+         <div class="stat-icon">
+            <i class="fas fa-heart"></i>
+         </div>
+         <div class="stat-content">
+            <h3>5</h3>
+            <p>Saved Properties</p>
+            <a href="saved-properties.html" class="stat-btn">View All</a>
+         </div>
+      </div>
+
+      <div class="stat-card">
+         <div class="stat-icon">
+            <i class="fas fa-eye"></i>
+         </div>
+         <div class="stat-content">
+            <h3>12</h3>
+            <p>Properties Viewed</p>
+            <a href="../search.html" class="stat-btn">Browse More</a>
+         </div>
+      </div>
+   </div>
+</section>
+
+<section class="quick-actions">
+   <h1 class="heading">Quick Actions</h1>
+   <div class="actions-container">
+      <div class="action-card">
+         <div class="action-icon">
+            <i class="fas fa-search"></i>
+         </div>
+         <div class="action-content">
+            <h3>Find Housing</h3>
+            <p>Search for available properties</p>
+            <a href="../search.html" class="action-btn">Search now</a>
+         </div>
+      </div>
+      
+      <div class="action-card">
+         <div class="action-icon">
+            <i class="fas fa-heart"></i>
+         </div>
+         <div class="action-content">
+            <h3>Saved Properties</h3>
+            <p>View your saved listings</p>
+            <a href="saved-properties.html" class="action-btn">View Saved</a>
+         </div>
+      </div>
+   </div>
+</section>
+
+<section class="recent-properties">
+<section class="recent-properties">
+   <h1 class="heading">Saved Properties</h1>
+   <div class="properties-container">
+      <div class="property-card">
+         <div class="property-header">
+            <div class="property-avatar">GH</div>
+            <div class="property-info">
+               <p>Golden Harvest BH</p>
+               <span>Saved: 01-10-2023</span>
+            </div>
+         </div>
+         <div class="property-image">
+            <div class="property-badges">
+               <span class="badge type">Bed Spacer</span>
+               <span class="badge status">Available</span>
+            </div>
+            <img src="../images/house-img-1.webp" alt="Golden Harvest Boarding House">
+         </div>
+         <div class="property-details">
+            <h3>Golden Harvest Boarding House</h3>
+            <p class="location"><i class="fas fa-map-marker-alt"></i> Golden Harvest Subdivision</p>
+            <div class="property-stats">
+               <div class="stat">
+                  <i class="fas fa-peso-sign"></i>
+                  <span>₱2,500/month</span>
+               </div>
+               <div class="stat">
+                  <i class="fas fa-user"></i>
+                  <span>Capacity: 4-5</span>
+               </div>
+            </div>
+         </div>
+         <div class="property-actions">
+            <a href="#" class="btn secondary">Remove</a>
+            <a href="../view_property.html" class="btn primary">View Details</a>
+         </div>
+      </div>
+
+      <div class="property-card">
+         <div class="property-header">
+            <div class="property-avatar">MS</div>
+            <div class="property-info">
+               <p>Modern Studio</p>
+               <span>Saved: 15-09-2023</span>
+            </div>
+         </div>
+         <div class="property-image">
+            <div class="property-badges">
+               <span class="badge type">Studio Type</span>
+               <span class="badge status">Available</span>
+            </div>
+            <img src="../images/house-img-2.webp" alt="Modern Studio Unit">
+         </div>
+         <div class="property-details">
+            <h3>Modern Studio Unit</h3>
+            <p class="location"><i class="fas fa-map-marker-alt"></i> City Center</p>
+            <div class="property-stats">
+               <div class="stat">
+                  <i class="fas fa-peso-sign"></i>
+                  <span>₱4,500/month</span>
+               </div>
+               <div class="stat">
+                  <i class="fas fa-user"></i>
+                  <span>Capacity: 2-4</span>
+               </div>
+            </div>
+         </div>
+         <div class="property-actions">
+            <a href="#" class="btn secondary">Remove</a>
+            <a href="../view_property.html" class="btn primary">View Details</a>
+         </div>
+      </div>
+   </div>
+   <div class="view-all-container">
+      <a href="saved-properties.html" class="view-all-btn">View All Saved Properties</a>
+   </div>
+</section>
+
+<script src="../js/script.js"></script>
+<script src="../js/saved-properties.js"></script>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Admin Dashboard</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="../css/style.css">
+
+   <style>
+      /* Admin Dashboard Styles */
+      .admin-dashboard {
+         padding: 2rem;
+         max-width: 1200px;
+         margin: 0 auto;
+      }
+
+      .admin-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 3rem;
+         padding-bottom: 1rem;
+         border-bottom: var(--border);
+      }
+
+      .admin-welcome h1 {
+         font-size: 2.8rem;
+         color: var(--black);
+         margin-bottom: 0.5rem;
+      }
+
+      .admin-welcome p {
+         color: var(--light-color);
+         font-size: 1.6rem;
+      }
+
+      .admin-logout {
+         background: var(--main-color);
+         color: var(--white);
+         padding: 1rem 2rem;
+         border-radius: 8px;
+         text-decoration: none;
+         font-size: 1.6rem;
+         transition: all 0.3s ease;
+      }
+
+      .admin-logout:hover {
+         transform: translateY(-2px);
+         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      }
+
+      .stats-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+         gap: 2rem;
+         margin-bottom: 3rem;
+      }
+
+      .stat-card {
+         background: var(--white);
+         padding: 2rem;
+         border-radius: 15px;
+         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+         text-align: center;
+         border-top: 4px solid var(--main-color);
+      }
+
+      .stat-card i {
+         font-size: 3rem;
+         color: var(--main-color);
+         margin-bottom: 1rem;
+      }
+
+      .stat-number {
+         font-size: 3rem;
+         font-weight: 700;
+         color: var(--black);
+         margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+         color: var(--light-color);
+         font-size: 1.6rem;
+      }
+
+      .admin-actions {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+         gap: 2rem;
+         margin-bottom: 3rem;
+      }
+
+      .action-card {
+         background: var(--white);
+         padding: 2.5rem;
+         border-radius: 15px;
+         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+         text-align: center;
+         transition: all 0.3s ease;
+         cursor: pointer;
+         border: 2px solid transparent;
+      }
+
+      .action-card:hover {
+         transform: translateY(-5px);
+         border-color: var(--main-color);
+      }
+
+      .action-card i {
+         font-size: 4rem;
+         color: var(--main-color);
+         margin-bottom: 1.5rem;
+         display: block;
+      }
+
+      .action-card h3 {
+         font-size: 2rem;
+         color: var(--black);
+         margin-bottom: 1rem;
+      }
+
+      .action-card p {
+         color: var(--light-color);
+         font-size: 1.4rem;
+         margin-bottom: 1.5rem;
+      }
+
+      .action-btn {
+         background: var(--main-color);
+         color: var(--white);
+         padding: 1rem 2rem;
+         border-radius: 8px;
+         text-decoration: none;
+         font-size: 1.4rem;
+         transition: all 0.3s ease;
+         display: inline-block;
+      }
+
+      .action-btn:hover {
+         background: var(--black);
+      }
+
+      .pending-alert {
+         background: #fff3cd;
+         border: 1px solid #ffeaa7;
+         border-radius: 10px;
+         padding: 1.5rem;
+         margin-bottom: 2rem;
+         display: flex;
+         align-items: center;
+         gap: 1rem;
+      }
+
+      .pending-alert i {
+         color: #f39c12;
+         font-size: 2rem;
+      }
+
+      .pending-alert p {
+         color: #856404;
+         font-size: 1.6rem;
+         margin: 0;
+      }
+
+      .pending-alert a {
+         color: var(--main-color);
+         text-decoration: none;
+         font-weight: 600;
+      }
+
+      .pending-alert a:hover {
+         text-decoration: underline;
+      }
+   </style>
+
+</head>
+<body>
+   
+<!-- header section starts  -->
+
+<header class="header">
+
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="../home.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+      </section>
+   </nav>
+
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               <li><a href="#">Admin<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="dashboard.html">Dashboard</a></li>
+                     <li><a href="pending-landlords.html">Pending Landlords</a></li>
+                     <li><a href="manage-properties.html">Manage Properties</a></li>
+                     <li><a href="manage-users.html">Manage Users</a></li>
+                     <li><a href="manage-reviews.html">Manage Reviews</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+
+         <ul>
+            <li><a href="#" id="adminLogout" class="admin-logout">
+               <i class="fas fa-sign-out-alt"></i> Logout
+            </a></li>
+         </ul>
+      </section>
+   </nav>
+
+</header>
+
+<!-- header section ends -->
+
+<!-- admin dashboard section starts  -->
+
+<section class="admin-dashboard">
+   <div class="admin-header">
+      <div class="admin-welcome">
+         <h1>Admin Dashboard</h1>
+         <p>Welcome back, <span id="adminName">Admin</span>!</p>
+      </div>
+   </div>
+
+   <!-- Pending Landlords Alert -->
+   <div class="pending-alert" id="pendingAlert" style="display: none;">
+      <i class="fas fa-exclamation-triangle"></i>
+      <p>You have <strong id="pendingCount">0</strong> landlord registrations waiting for approval. 
+         <a href="pending-landlords.html">Review them now →</a>
+      </p>
+   </div>
+
+   <!-- Statistics Grid -->
+   <div class="stats-grid">
+      <div class="stat-card">
+         <i class="fas fa-users"></i>
+         <div class="stat-number" id="totalUsers">0</div>
+         <div class="stat-label">Total Users</div>
+      </div>
+
+      <div class="stat-card">
+         <i class="fas fa-building"></i>
+         <div class="stat-number" id="totalProperties">0</div>
+         <div class="stat-label">Properties</div>
+      </div>
+
+      <div class="stat-card">
+         <i class="fas fa-user-tie"></i>
+         <div class="stat-number" id="totalLandlords">0</div>
+         <div class="stat-label">Landlords</div>
+      </div>
+
+      <div class="stat-card">
+         <i class="fas fa-home"></i>
+         <div class="stat-number" id="totalBoarders">0</div>
+         <div class="stat-label">Boarders</div>
+      </div>
+
+      <!-- NEW: Review Statistics -->
+      <div class="stat-card">
+         <i class="fas fa-star"></i>
+         <div class="stat-number" id="totalReviews">0</div>
+         <div class="stat-label">Total Reviews</div>
+      </div>
+
+      <div class="stat-card">
+         <i class="fas fa-chart-line"></i>
+         <div class="stat-number" id="averageRating">0.0</div>
+         <div class="stat-label">Average Rating</div>
+      </div>
+   </div>
+
+   <!-- Quick Actions -->
+   <div class="admin-actions">
+      <div class="action-card" onclick="location.href='pending-landlords.html'">
+         <i class="fas fa-user-check"></i>
+         <h3>Approve Landlords</h3>
+         <p>Review and approve new landlord registrations</p>
+         <span class="action-btn">Manage Landlords</span>
+      </div>
+
+      <div class="action-card" onclick="location.href='manage-properties.html'">
+         <i class="fas fa-home"></i>
+         <h3>Manage Properties</h3>
+         <p>View and manage all property listings</p>
+         <span class="action-btn">View Properties</span>
+      </div>
+
+      <div class="action-card" onclick="location.href='manage-users.html'">
+         <i class="fas fa-cog"></i>
+         <h3>User Management</h3>
+         <p>Manage all users and their accounts</p>
+         <span class="action-btn">Manage Users</span>
+      </div>
+
+      <!-- NEW: Reviews Action Card -->
+      <div class="action-card" onclick="location.href='manage-reviews.html'">
+         <i class="fas fa-star"></i>
+         <h3>Manage Reviews</h3>
+         <p>Moderate and manage property reviews</p>
+         <span class="action-btn">Manage Reviews</span>
+      </div>
+   </div>
+</section>
+
+<script>
+// Load dashboard data
+function loadDashboardData() {
+   fetch('../api/admin/dashboard.php')
+      .then(response => response.json())
+      .then(data => {
+         if (data.success) {
+            // Update statistics
+            document.getElementById('totalUsers').textContent = data.stats.total_users;
+            document.getElementById('totalProperties').textContent = data.stats.total_properties;
+            document.getElementById('totalLandlords').textContent = data.stats.total_landlords;
+            document.getElementById('totalBoarders').textContent = data.stats.total_boarders;
+            
+            // Update review statistics
+            document.getElementById('totalReviews').textContent = data.stats.total_reviews;
+            document.getElementById('averageRating').textContent = data.stats.average_rating;
+            
+            // Update admin name
+            document.getElementById('adminName').textContent = data.admin_name;
+            
+            // Show pending alert if there are pending landlords
+            if (data.stats.pending_landlords > 0) {
+               document.getElementById('pendingCount').textContent = data.stats.pending_landlords;
+               document.getElementById('pendingAlert').style.display = 'flex';
+            }
+         }
+      })
+      .catch(error => {
+         console.error('Error loading dashboard:', error);
+      });
+}
+
+// Logout functionality
+document.getElementById('adminLogout').addEventListener('click', function(e) {
+   e.preventDefault();
+   
+   if (confirm('Are you sure you want to logout?')) {
+      fetch('../api/admin/auth.php?action=logout')
+         .then(response => response.json())
+         .then(data => {
+            if (data.success) {
+               window.location.href = 'login.html';
+            }
+         })
+         .catch(error => {
+            console.error('Logout error:', error);
+            window.location.href = 'login.html';
+         });
+   }
+});
+
+// Check if admin is logged in
+function checkAdminAuth() {
+   fetch('../api/admin/dashboard.php')
+      .then(response => response.json())
+      .then(data => {
+         if (!data.success && data.message === 'Unauthorized') {
+            window.location.href = 'login.html';
+         }
+      })
+      .catch(error => {
+         console.error('Auth check error:', error);
+         window.location.href = 'login.html';
+      });
+}
+
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', function() {
+   checkAdminAuth();
+   loadDashboardData();
+   
+   // Refresh data every 30 seconds
+   setInterval(loadDashboardData, 30000);
+});
+</script>
+
+<!-- footer section starts  -->
+
+<footer class="footer">
+   <section class="flex">
+      <div class="box">
+         <a href="tel:1234567890"><i class="fas fa-phone"></i><span>phone number</span></a>
+         <a href="../contact.html"><span>contact</span></a>
+      </div>
+
+      <div class="box">
+         <a href="mailto:GHboardinghouse@gmail.com"><i class="fas fa-envelope"></i><span>GHboardinghouse@gmail.com</span></a>
+         <a href="../listings.html"><span>all listings</span></a>
+      </div>
+
+      <div class="box">
+         <a href="#"><i class="fas fa-map-marker-alt"></i><span>address</span></a>
+         <a href="../about.html"><span>about</span></a>
+      </div>
+   </section>
+
+   <div class="credit">Design and Developed by <span>CPE-3B</span></div>
+</footer>
+
+<!-- footer section ends -->
+
+<!-- custom js file link  -->
+<script src="../js/script.js"></script>
+
+</body>
+</html>

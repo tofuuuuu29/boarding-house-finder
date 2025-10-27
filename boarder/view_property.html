@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Details - MyHome</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .property-details-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .image-gallery {
+            position: relative;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 500px;
+        }
+
+        .gallery-main {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .gallery-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-thumbnails {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        .gallery-thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-thumbnail.active {
+            border-color: var(--main-color);
+        }
+
+        .gallery-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-nav:hover {
+            background: var(--main-color);
+        }
+
+        .gallery-prev {
+            left: 2rem;
+        }
+
+        .gallery-next {
+            right: 2rem;
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .property-title h1 {
+            font-size: 3rem;
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .property-location {
+            font-size: 1.6rem;
+            color: var(--light-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .property-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.primary {
+            background: var(--main-color);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: var(--main-color);
+            border: 2px solid var(--main-color);
+        }
+
+        .property-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .meta-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--main-color);
+        }
+
+        .meta-info h3 {
+            font-size: 1.6rem;
+            color: var(--black);
+        }
+
+        .meta-info p {
+            font-size: 1.4rem;
+            color: var(--light-color);
+        }
+
+        .property-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .content-main {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--black);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: var(--border);
+        }
+
+        .property-description {
+            font-size: 1.6rem;
+            color: var(--light-color);
+            line-height: 1.6;
+        }
+
+        .amenities-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .amenity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.6rem;
+            color: var(--light-color);
+        }
+
+        .amenity-item i {
+            color: var(--main-color);
+        }
+
+        .rules-list {
+            list-style: none;
+        }
+
+        .rules-list li {
+            font-size: 1.6rem;
+            color: var(--light-color);
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .rules-list li:before {
+            content: "•";
+            color: var(--main-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .content-sidebar {
+            align-self: start;
+        }
+
+        .sidebar-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .landlord-info {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .landlord-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+        }
+
+        .landlord-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .landlord-name {
+            font-size: 1.8rem;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+        }
+
+        .landlord-meta {
+            font-size: 1.4rem;
+            color: var(--light-color);
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.6rem;
+            color: var(--light-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-item i {
+            color: var(--main-color);
+        }
+
+        .reviews-section {
+            margin-top: 2rem;
+        }
+
+        .review-summary {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-big {
+            text-align: center;
+        }
+
+        .rating-number {
+            font-size: 4rem;
+            color: var(--black);
+            font-weight: bold;
+        }
+
+        .rating-stars {
+            color: #ffd700;
+            font-size: 2rem;
+            margin: 0.5rem 0;
+        }
+
+        .rating-count {
+            font-size: 1.4rem;
+            color: var(--light-color);
+        }
+
+        .review-list {
+            margin-top: 2rem;
+        }
+
+        .review-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .reviewer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .reviewer-info {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-size: 1.6rem;
+            color: var(--black);
+        }
+
+        .review-date {
+            font-size: 1.4rem;
+            color: var(--light-color);
+        }
+
+        .review-rating {
+            color: #ffd700;
+            font-size: 1.4rem;
+        }
+
+        .review-content {
+            font-size: 1.6rem;
+            color: var(--light-color);
+            line-height: 1.6;
+        }
+
+        .review-form-container {
+            margin-top: 2rem;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .review-form {
+            margin-top: 1rem;
+        }
+
+        .rating-input {
+            margin-bottom: 1.5rem;
+        }
+
+        .star-rating {
+            font-size: 2rem;
+            color: #ffd700;
+            cursor: pointer;
+        }
+
+        .star-rating i {
+            margin-right: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .star-rating i:hover {
+            transform: scale(1.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.6rem;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            height: 150px;
+            padding: 1rem;
+            font-size: 1.6rem;
+            border: 1px solid var(--light-color);
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .form-group input[type="file"] {
+            font-size: 1.4rem;
+        }
+
+        .submit-review {
+            background: var(--main-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-review:hover {
+            background: var(--hover);
+        }
+
+        .review-images {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .review-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .no-reviews {
+            font-size: 1.6rem;
+            color: var(--light-color);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .property-content {
+                grid-template-columns: 1fr;
+            }
+
+            .image-gallery {
+                height: 300px;
+            }
+
+            .gallery-thumbnails {
+                display: none;
+            }
+
+            .property-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .property-actions {
+                width: 100%;
+            }
+
+            .action-btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar nav-1">
+            <section class="flex">
+                <a href="dashboard.html" class="logo"><i class="fas fa-house"></i>MyHome</a>
+            </section>
+        </nav>
+
+        <nav class="navbar nav-2">
+            <section class="flex">
+                <div id="menu-btn" class="fas fa-bars"></div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="../search.html">Find Housing</a></li>
+                        <li><a href="saved-properties.html">Saved Properties</a></li>
+                    </ul>
+                </div>
+                <ul>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> <?php echo $_SESSION['user_name']; ?></a></li>
+                    <li><a href="../auth/logout.php"><i class="fas fa-sign-out"></i> Logout</a></li>
+                </ul>
+            </section>
+        </nav>
+    </header>
+
+    <div class="property-details-container">
+        <div class="image-gallery">
+            <div class="gallery-main">
+                <img src="" alt="" id="mainImage">
+            </div>
+            <div class="gallery-thumbnails" id="thumbnails">
+                <!-- Thumbnails will be inserted here -->
+            </div>
+            <div class="gallery-nav gallery-prev">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="gallery-nav gallery-next">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <div class="property-header">
+            <div class="property-title">
+                <h1 id="propertyTitle">Loading...</h1>
+                <div class="property-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="propertyLocation">Loading...</span>
+                </div>
+            </div>
+            <div class="property-actions">
+                <button class="action-btn secondary" id="saveButton">
+                    <i class="fas fa-heart"></i> Save
+                </button>
+                <button class="action-btn primary" id="contactButton">
+                    <i class="fas fa-envelope"></i> Contact Landlord
+                </button>
+            </div>
+        </div>
+
+        <div class="property-meta">
+            <div class="meta-item">
+                <div class="meta-icon">
+                    <i class="fas fa-peso-sign"></i>
+                </div>
+                <div class="meta-info">
+                    <h3>Monthly Rent</h3>
+                    <p id="propertyPrice">Loading...</p>
+                </div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="meta-info">
+                    <h3>Room Type</h3>
+                    <p id="propertyType">Loading...</p>
+                </div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="meta-info">
+                    <h3>Capacity</h3>
+                    <p id="propertyCapacity">Loading...</p>
+                </div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="meta-info">
+                    <h3>Rating</h3>
+                    <p id="propertyRating">Loading...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="property-content">
+            <div class="content-main">
+                <div class="content-section">
+                    <h2 class="section-title">Description</h2>
+                    <div class="property-description" id="propertyDescription">
+                        Loading...
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="section-title">Amenities</h2>
+                    <div class="amenities-list" id="amenitiesList">
+                        <!-- Amenities will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="section-title">House Rules</h2>
+                    <ul class="rules-list" id="rulesList">
+                        <!-- Rules will be inserted here -->
+                    </ul>
+                </div>
+
+                <div class="content-section reviews-section">
+                    <h2 class="section-title">Reviews</h2>
+                    <div class="review-summary">
+                        <div class="rating-big">
+                            <div class="rating-number" id="averageRating">0.0</div>
+                            <div class="rating-stars" id="ratingStars">★★★★★</div>
+                            <div class="rating-count" id="reviewCount">0 reviews</div>
+                        </div>
+                    </div>
+                    <div class="review-list" id="reviewsList">
+                        <!-- Reviews will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-sidebar">
+                <div class="sidebar-card">
+                    <div class="landlord-info">
+                        <div class="landlord-avatar">
+                            <img src="" alt="" id="landlordImage">
+                        </div>
+                        <h3 class="landlord-name" id="landlordName">Loading...</h3>
+                        <p class="landlord-meta">Property Owner</p>
+                    </div>
+                    <ul class="contact-list">
+                        <li class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span id="landlordPhone">Loading...</span>
+                        </li>
+                        <li class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span id="landlordEmail">Loading...</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/property-details.js"></script>
+    <script src="../js/reviews.js"></script>
+</body>
+</html>
